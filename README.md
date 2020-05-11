@@ -1,2 +1,2 @@
 # better-image-description
-A browser extension with no or insufficient alt text
+A browser extension to find images with no or insufficient alt text
