@@ -56,6 +56,7 @@ function reportExecuteScriptError(error) {
 }
 
 browser.tabs.executeScript({ file: "/content_scripts/a11y-dialog.js" })
+browser.tabs.executeScript({ file: "/content_scripts/purify.min.js" })
 browser.tabs.executeScript({ file: "/content_scripts/content.js" })
     .then(checks)
     .catch(reportExecuteScriptError);

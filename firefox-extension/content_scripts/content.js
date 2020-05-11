@@ -98,7 +98,8 @@
     function handleDialog(ev) {
         if (ev.target.classList.contains('better-image-description-button')) {
 
-            document.body.innerHTML = `<div class="better-image-description-main">${document.body.innerHTML}</div>`;
+            const bodyHTML = `<div class="better-image-description-main">${document.body.innerHTML}</div>`;
+            document.body.innerHTML = DOMPurify.sanitize(bodyHTML);
 
             const hasDialog = document.getElementById('better-image-description-dialog');
 
@@ -108,23 +109,22 @@
                 dialog.id = 'better-image-description-dialog';
                 dialog.className = 'better-image-description-dialog';
                 dialog.setAttribute('aria-hidden', true);
-                dialog.innerHTML = `<div class="dialog-overlay" tabindex="-1" data-a11y-dialog-hide></div>
-                 <div role="dialog" class="dialog-content" aria-labelledby="dialogTitle">
-                   <button data-a11y-dialog-hide class="dialog-close" aria-label="Close this dialog window">&times;</button>
-           
-                   <h1 id="dialogTitle">Details</h1>
-         
-                   <div class="better-image-description-dialog-content"></div>
-         
-                 </div>`
+                const dialogInner = `<div class="dialog-overlay" tabindex="-1" data-a11y-dialog-hide></div>
+                <div role="dialog" class="dialog-content" aria-labelledby="dialogTitle">
+                  <button data-a11y-dialog-hide class="dialog-close" aria-label="Close this dialog window">&times;</button>
+          
+                  <h1 id="dialogTitle">Details</h1>
+        
+                  <div class="better-image-description-dialog-content"></div>
+        
+                </div>`
+                dialog.innerHTML = DOMPurify.sanitize(dialogInner);
                 document.body.appendChild(dialog);
             }
 
             const dialogContent = document.querySelector('.better-image-description-dialog-content');
 
-            dialogContent.innerHTML = `
-                ${ev.target.nextSibling.innerHTML}
-            `;
+            dialogContent.innerHTML = DOMPurify.sanitize(ev.target.nextSibling.innerHTML);
 
             const dialogEl = document.getElementById('better-image-description-dialog');
             const mainEl = document.querySelector('.better-image-description-main');
@@ -188,7 +188,7 @@
             const altInfo = document.createElement('p');
             altInfo.className = 'better-image-description-alt-info';
             if (image.alt) {
-                altInfo.innerHTML = `<strong>Description:</strong> ${image.alt}`;
+                altInfo.innerHTML = DOMPurify.sanitize(`<strong>Description:</strong> ${image.alt}`);
             } else {
                 altInfo.innerText = 'Oh no, no description provided!';
             }
