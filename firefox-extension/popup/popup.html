@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Better image description</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <main>
+        <h1>Better Image Description</h1>
+        <p hidden data-image-count>Found <span></span> images</p>
+        <p hidden data-yeah>Awesome, looks like all images have sufficient alt text</p>
+        <p hidden data-errors>Errors: <span></span></p>
+        <p hidden data-warnings>Warnings: <span></span></p>
+        <button class="check" data-check hidden>Run check</button>
+        <button class="reset" data-reset>Reset</button>
+    </main>
+    <footer>
+        <p><a href="mailto:info@writerie.com">Feedback</a></p>
+    </footer>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
