@@ -183,7 +183,6 @@
             infoWrapperImg.className = 'better-image-description-image-img';
 
 
-
             // info about the image description currently in use for an image
             const altInfo = document.createElement('p');
             altInfo.className = 'better-image-description-alt-info';
