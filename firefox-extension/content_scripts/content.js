@@ -85,6 +85,24 @@
         return false;
     };
 
+    function checkIfUsesAriaToHideAlternativeText(image) {
+        if (image.hasAttribute('aria-hidden') || image.getAttribute('aria-role') === 'presentation' || image.getAttribute('aria-role') === 'none') {
+            return true;
+        }
+
+        return false;
+    }
+
+    function checkIfImageHasNoAltAttribute(image) {
+        if (!image.hasAttribute('alt')) {
+            if (image.hasAttribute('aria-hidden') || image.getAttribute('aria-role') === 'presentation' || image.getAttribute('aria-role') === 'none') {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     function unwrap(wrapper) {
         var docFrag = document.createDocumentFragment();
         while (wrapper.firstChild) {
@@ -249,6 +267,14 @@
                 imageWarnings += 1;
             }
 
+            if (checkIfUsesAriaToHideAlternativeText(image)) {
+                messageText = "Please check if this image is really decorative and needs no description!";
+                messageClass = 'better-image-description-message better-image-description-message--badish';
+                wrapperClass = 'better-image-description-image-wrapper--badish';
+                level = 'warning';
+                imageWarnings += 1;
+            }
+
             if (checkIfOnlyContainsImage(image)) {
                 messageText = "Please don't use only the word Image";
                 messageClass = 'better-image-description-message better-image-description-message--bad';
@@ -266,7 +292,7 @@
             }
 
 
-            if (!image.hasAttribute('alt')) {
+            if (checkIfImageHasNoAltAttribute(image)) {
                 messageText = 'Please provide an alt attribute. If the image is decorative it can be empty (alt=""), otherwise please describe the image';
                 messageClass = 'better-image-description-message better-image-description-message--bad';
                 wrapperClass = 'better-image-description-image-wrapper--bad';
