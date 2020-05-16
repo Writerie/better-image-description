@@ -209,8 +209,8 @@
 
             if (checkIfAtLeastTwoCharacters(image)) {
                 messageText = 'Please describe the image. Two or less characters are probably not enough.';
-                messageClass = 'better-image-description-message better-image-description-message--bad';
-                wrapperClass = 'better-image-description-image-wrapper--bad too-short';
+                messageClass = 'better-image-description-message better-image-description-message--badish';
+                wrapperClass = 'better-image-description-image-wrapper--badish';
                 level = 'warning';
                 imageWarnings += 1;
             }
@@ -269,7 +269,7 @@
             if (!image.hasAttribute('alt')) {
                 messageText = 'Please provide an alt attribute. If the image is decorative it can be empty (alt=""), otherwise please describe the image';
                 messageClass = 'better-image-description-message better-image-description-message--bad';
-                wrapperClass = 'better-image-description-image-wrapper--bad no-alt';
+                wrapperClass = 'better-image-description-image-wrapper--bad';
                 level = 'error';
                 imageErrors += 1;
             }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tests for Better Image Description</title>
+</head>
+
+<body>
+    <h1>Tests</h1>
+
+    <h2>Missing alt attribute</h2>
+    <p class="description">This image has no alt attribute.</p>
+    <p class="level--error">Level: Error</p>
+    <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg">
+
+    <h2>Alt text is same as image src</h2>
+    <p class="description">This image uses the same value for the alt text as the image source.</p>
+    <p class="level--error">Level: Error</p>
+    <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg">
+
+    <h2>Alt text only says "Image"</h2>
+    <p class="description">This image uses "image" as alt text</p>
+    <p class="level--error">Level: Error</p>
+    <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="Image">
+
+    <h2>Empty alt text</h2>
+    <p class="description">This image has an empty alt attribute</p>
+    <p class="level--warning">Level: Warning</p>
+    <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="">
+
+    <h2>Same alt text as nearby headline</h2>
+    <p class="description">This image uses the same value for the alt attribute as a nearby headline</p>
+    <p class="level--warning">Level: Warning</p>
+    <article>
+        <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="Headline">
+        <h2>Headline</h2>
+    </article>
+
+    <h2>Same alt text as nearby headline</h2>
+    <p class="description">This image uses the same value for the alt attribute as a nearby headline</p>
+    <p class="level--warning">Level: Warning</p>
+    <a href="/test">
+        <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="Headline">
+        <h3>Headline</h3>
+    </a>
+
+    <h2>Starts with "Image of"</h2>
+    <p class="description">This image uses the unneeded phrase "Image of" at the beginning of the alt text</p>
+    <p class="level--warning">Level: Warning</p>
+    <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="Image of a lawn with a lake and mountains in the background">
+
+    <h2>Uses image extension in alt text</h2>
+    <p class="description">This image uses .jpg in the alt text</p>
+    <p class="level--warning">Level: Warning</p>
+    <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="12.jpg">
+
+    <h2>Uses only two characters</h2>
+    <p class="description">This image uses only two characters for the alt text</p>
+    <p class="level--warning">Level: Warning</p>
+    <img src="https://justmarkup.com/azores/img/sao-miguel/small/12.jpg" alt="Ah">
+</body>
+
+</html>
