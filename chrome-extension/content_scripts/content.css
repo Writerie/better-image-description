@@ -1,0 +1,256 @@
+/* Yes, that is right, I am using !important for everything, because I need to make sure to override individual page styles. That's how it works :-) */
+
+html,
+body {
+    background: #fff !important;
+}
+
+*::after,
+*::before {
+    background: none !important;
+    pointer-events: none;
+}
+
+iframe,
+svg {
+    opacity: 0.1 !important;
+}
+
+*::hover {
+    transform: none !important;
+}
+
+.better-image-description-image-wrapper {
+    position: relative !important;
+}
+
+*:focus {
+    outline: 1px solid black !important;
+}
+
+*,
+body *,
+html *,
+[class] * {
+    background: none !important;
+    color: transparent !important;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important;
+    border: none !important;
+    z-index: initial !important;
+}
+
+.better-image-description-alt-info,
+.better-image-description-message {
+    color: #000 !important;
+    margin: 0 !important;
+    padding: 10px 0 !important;
+    font-size: 14px !important;
+    text-shadow: none !important;
+    line-height: 16px !important;
+    text-align: left !important;
+    -webkit-text-fill-color: #000 !important;
+    font-weight: normal !important;
+}
+
+.better-image-description-alt-info strong {
+    -webkit-text-fill-color: #000 !important;
+    text-shadow: none !important;
+}
+
+.better-image-description-message--good {
+    color: #026f02 !important;
+    -webkit-text-fill-color: #026f02 !important;
+}
+
+.better-image-description-message--badish {
+    color: #996608 !important;
+    -webkit-text-fill-color: #996608 !important;
+}
+
+.better-image-description-message--bad {
+    color: #bb0505 !important;
+    -webkit-text-fill-color: #bb0505 !important;
+}
+
+.better-image-description-image-wrapper img {
+    position: relative !important;
+    z-index: 0 !important;
+}
+
+.better-image-description-image-wrapper button {
+    z-index: 3000 !important;
+    position: absolute !important;
+    left: 10px !important;
+    top: 10px !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    width: calc(100% - 20px) !important;
+    height: calc(100% - 20px) !important;
+    background: black !important;
+    color: white !important;
+    text-shadow: none !important;
+    border: 1px solid black !important;
+    min-width: 80px !important;
+    min-height: 30px !important;
+    cursor: pointer !important;
+    -webkit-text-fill-color: white !important;
+    font-weight: normal !important;
+    background: url("./icons/info.svg") no-repeat 4px center !important;
+    opacity: 0.8 !important;
+    text-align: left !important;
+    padding-left: 34px !important;
+}
+
+.better-image-description-image-wrapper--good button {
+    background-color: #026f02 !important;
+}
+
+.better-image-description-image-wrapper--badish button {
+    background-color: #d9910d !important;
+    color: black !important;
+}
+
+.better-image-description-image-wrapper--bad button {
+    background-color: #bb0505 !important;
+}
+
+.better-image-description-info-wrapper {
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-weight: normal !important;
+}
+
+.better-image-description-info-wrapper.is--active {
+    display: flex !important;
+}
+
+.better-image-description-image-img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+
+/* -------------------------------------------------------------------------- *\
+ * Necessary styling for the dialog to work
+ * -------------------------------------------------------------------------- */
+
+
+/**
+ * When `<dialog>` is properly supported, the overlay is implied and can be
+ * styled with `::backdrop`, which means the DOM one should be removed.
+ */
+
+[data-a11y-dialog-native] .dialog-overlay {
+    display: none !important;
+}
+
+.better-image-description-dialog[aria-hidden="true"] {
+    display: none !important;
+}
+
+
+/* -------------------------------------------------------------------------- *\
+   * Styling to make the dialog look like a dialog
+   * -------------------------------------------------------------------------- */
+
+.better-image-description-dialog .dialog-overlay {
+    z-index: 2000000 !important;
+    background-color: rgba(0, 0, 0, 0.66) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+.better-image-description-dialog .dialog-content {
+    background-color: rgb(255, 255, 255) !important;
+    z-index: 2000000 !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    text-shadow: none !important;
+}
+
+
+/* -------------------------------------------------------------------------- *\
+   * Extra dialog styling to make it shiny
+   * -------------------------------------------------------------------------- */
+
+@keyframes fade-in {
+    from {
+        opacity: 0 !important;
+    }
+    to {
+        opacity: 1 !important;
+    }
+}
+
+@keyframes appear {
+    from {
+        transform: translate(-50%, -40%);
+        opacity: 0 !important;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1 !important;
+    }
+}
+
+.better-image-description-dialog:not([aria-hidden='true'])>.dialog-overlay {
+    animation: fade-in 200ms 1 both !important;
+}
+
+.better-image-description-dialog:not([aria-hidden='true'])>.dialog-content {
+    animation: appear 400ms 150ms 1 both !important;
+}
+
+.better-image-description-dialog .dialog-content {
+    padding: 1em !important;
+    max-width: 90% !important;
+    width: 600px !important;
+    border-radius: 2px !important;
+}
+
+.better-image-description-dialog .dialog-overlay {
+    background-color: rgba(43, 46, 56, 0.9) !important;
+}
+
+.better-image-description-dialog .dialog-content h1 {
+    margin: 10px 0 !important;
+    font-size: 1.25em !important;
+    text-shadow: none !important;
+    color: #000 !important;
+}
+
+.better-image-description-dialog .dialog-content img {
+    margin-bottom: 10px !important;
+}
+
+.better-image-description-dialog .dialog-close {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    font-weight: bold !important;
+    font-size: 2em !important;
+    width: 1.2em !important;
+    height: 1.2em !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    transition: 0.15s !important;
+    text-shadow: none !important;
+    color: #000 !important;
+}
