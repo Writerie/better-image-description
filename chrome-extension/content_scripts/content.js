@@ -103,6 +103,22 @@
         return false;
     }
 
+    function checkIfGraphicalLink(image) {
+        var parentIsLink = image.parentNode && image.parentNode.nodeName === 'A' || false;
+        var isOnlyChild = image.parentNode && image.parentNode.childElementCount === 1 || false;
+        var parentIsPicture = image.parentNode && image.parentNode.nodeName === 'PICTURE' || false;
+        if (parentIsPicture) {
+            isOnlyChild = image.parentNode.parentNode && image.parentNode.parentNode.childElementCount === 1 || false;
+            parentIsLink = image.parentNode.parentNode && image.parentNode.parentNode.nodeName === 'A' || false;
+        }
+
+        if (parentIsLink && isOnlyChild) {
+            return true;
+        }
+
+        return false;
+    }
+
     function unwrap(wrapper) {
         var docFrag = document.createDocumentFragment();
         while (wrapper.firstChild) {
@@ -231,6 +247,14 @@
             let messageClass = 'better-image-description-message better-image-description-message--good';
             let wrapperClass = 'better-image-description-image-wrapper--good';
             let level = 'info';
+
+            if (checkIfGraphicalLink(image)) {
+                messageText = 'This seems to be an image link. Please use the alt text to describe for the action that will be initiated (the purpose of the image) and not the image itself.';
+                messageClass = 'better-image-description-message better-image-description-message--badish';
+                wrapperClass = 'better-image-description-image-wrapper--badish';
+                level = 'warning';
+                imageWarnings += 1;
+            }
 
             if (checkIfAtLeastTwoCharacters(image)) {
                 messageText = 'Please describe the image. Two or less characters are probably not enough.';
