@@ -85,6 +85,25 @@
         return false;
     };
 
+    function checkIfSameAsFigcaption(image) {
+        const parentLink = image.closest("figure");
+        let figcaption = false;
+
+        if (parentLink) {
+            figcaption = parentLink.querySelector('figcaption') ? parentLink.querySelector('figcaption') : false;
+        }
+
+        if (figcaption) {
+            const figcaptionText = figcaption.innerText ? figcaption.innerText.replace(/\s+/g, '') : '';
+            const imageAlt = image.alt ? image.alt.replace(/\s+/g, '') : '';
+            if (figcaptionText === imageAlt) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     function checkIfUsesAriaToHideAlternativeText(image) {
         if (image.hasAttribute('aria-hidden') || image.getAttribute('aria-role') === 'presentation' || image.getAttribute('aria-role') === 'none') {
             return true;
@@ -275,9 +294,16 @@
             }
 
 
-
             if (checkIfSameAsHeadline(image)) {
                 messageText = "Please don't use the same text as for the nearby headline";
+                messageClass = 'better-image-description-message better-image-description-message--badish';
+                wrapperClass = 'better-image-description-image-wrapper--badish';
+                level = 'warning';
+                imageWarnings += 1;
+            }
+
+            if (checkIfSameAsFigcaption(image)) {
+                messageText = "Please don't use the same text as for the figcaption";
                 messageClass = 'better-image-description-message better-image-description-message--badish';
                 wrapperClass = 'better-image-description-image-wrapper--badish';
                 level = 'warning';
