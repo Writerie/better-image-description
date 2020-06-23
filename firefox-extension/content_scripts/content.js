@@ -202,7 +202,7 @@
 
 
     // checks all images on the page and collects all errors and warnings found 
-    function checkAllImages() {
+    function checkAllImages(report = false) {
         const images = document.querySelectorAll('img');
         const currentURL = window.location.href;
         let imageErrors = 0;
@@ -256,7 +256,7 @@
 
 
             // default messages, classes and level
-            let messageText = 'Looks fine!';
+            let messageText = '';
             let messageClass = 'better-image-description-message better-image-description-message--good';
             let wrapperClass = 'better-image-description-image-wrapper--good';
             let level = 'info';
@@ -368,7 +368,8 @@
             imageData.push({
                 src: image.src,
                 alt: image.alt,
-                level: level
+                level: level,
+                messageText: messageText
             });
 
         });
@@ -377,8 +378,11 @@
 
         document.addEventListener('click', handleDialog);
 
+        console.log('imageData', imageData);
+
         // send all infos to the popup
         browser.runtime.sendMessage({
+            report: report,
             imageData: imageData,
             imageErrors: imageErrors,
             imageWarnings: imageWarnings,
@@ -423,6 +427,9 @@
         } else if (message.command === "reset") {
             removeChecks();
             document.removeEventListener('scroll', onScroll, { passive: true });
+        } else if (message.command === "report") {
+            removeChecks();
+            checkAllImages(report = true);
         }
     });
 

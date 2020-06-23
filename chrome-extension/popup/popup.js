@@ -37,6 +37,15 @@ function checks() {
             chrome.tabs.query({ active: true }, (tabs) => check(tabs));
         } else if (e.target.classList.contains("reset")) {
             chrome.tabs.query({ active: true }, (tabs) => reset(tabs));
+        } else if (e.target.classList.contains("report")) {
+            function getReport(tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    command: "report"
+                });
+            }
+            chrome.tabs.query({ active: true }, (tabs) => getReport(tabs));
+
+            e.preventDefault();
         }
     });
 
@@ -56,39 +65,48 @@ chrome.tabs.executeScript({ file: "/content_scripts/content.js" }, () => checks(
 
 // show warnings and errors in popup
 function showErrorsAndWarnings(request, sender, sendResponse) {
-    const errorElement = document.querySelector('[data-errors]');
-    const warningElement = document.querySelector('[data-warnings]');
-    const yeahElement = document.querySelector('[data-yeah]');
-    const imageCountElement = document.querySelector('[data-image-count]');
-    let hasErrorsOrWarnings = false;
+    if (request.report === true) {
+        const popupURL = chrome.extension.getURL(`popup/report.html?currenturl=${request.currentURL}&imageErrors=${request.imageErrors}&imageWarnings=${request.imageWarnings}&imageData=${JSON.stringify(request.imageData)}`);
 
-    if (request && request.imageErrors && request.imageErrors > 0) {
-        errorElement.hidden = false;
-        errorElement.querySelector('span').innerText = request.imageErrors;
-        hasErrorsOrWarnings = true;
+        chrome.windows.create({
+            url: popupURL,
+            focused: true
+        });
     } else {
-        errorElement.hidden = true;
-    }
+        const errorElement = document.querySelector('[data-errors]');
+        const warningElement = document.querySelector('[data-warnings]');
+        const yeahElement = document.querySelector('[data-yeah]');
+        const imageCountElement = document.querySelector('[data-image-count]');
+        let hasErrorsOrWarnings = false;
 
-    if (request && request.imageWarnings && request.imageWarnings > 0) {
-        warningElement.hidden = false;
-        warningElement.querySelector('span').innerText = request.imageWarnings;
-        hasErrorsOrWarnings = true;
-    } else {
-        warningElement.hidden = true;
-    }
+        if (request && request.imageErrors && request.imageErrors > 0) {
+            errorElement.hidden = false;
+            errorElement.querySelector('span').innerText = request.imageErrors;
+            hasErrorsOrWarnings = true;
+        } else {
+            errorElement.hidden = true;
+        }
 
-    if (hasErrorsOrWarnings) {
-        yeahElement.hidden = true;
-    } else {
-        yeahElement.hidden = false;
-    }
+        if (request && request.imageWarnings && request.imageWarnings > 0) {
+            warningElement.hidden = false;
+            warningElement.querySelector('span').innerText = request.imageWarnings;
+            hasErrorsOrWarnings = true;
+        } else {
+            warningElement.hidden = true;
+        }
 
-    if (request && request.imageData && request.imageData.length && request.imageData.length > 0) {
-        imageCountElement.querySelector('span').innerText = request.imageData.length;
-        imageCountElement.hidden = false;
-    } else {
-        imageCountElement.hidden = true;
+        if (hasErrorsOrWarnings) {
+            yeahElement.hidden = true;
+        } else {
+            yeahElement.hidden = false;
+        }
+
+        if (request && request.imageData && request.imageData.length && request.imageData.length > 0) {
+            imageCountElement.querySelector('span').innerText = request.imageData.length;
+            imageCountElement.hidden = false;
+        } else {
+            imageCountElement.hidden = true;
+        }
     }
 }
 

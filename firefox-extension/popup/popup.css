@@ -75,3 +75,8 @@ footer p {
 [data-warnings] {
     color: #996608;
 }
+
+[data-report] {
+    display: block;
+    padding-top: 20px;
+}
